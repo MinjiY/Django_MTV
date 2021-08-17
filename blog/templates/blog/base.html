@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Django Blog</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" type="text/css">
+    <link rel="stylesheet" href="{% static 'css/blog.css' %}">
+
+</head>
+<body>
+<div class="page-header">
+    {% if user.is_authenticated %}
+    <a href="{% url 'post_new' %}" class="top-menu">
+        <span class="glyphicon glyphicon-plus"></span>
+    </a>
+    <p class="top-menu">
+        Hello {{user.username}}
+        <small>(<a href="{% url 'logout' %}?next={{request.path}}">Logout</a>)</small>
+    </p>
+    {% else %}
+    <a href="{% url 'login' %}" class="top-menu">
+        <span class="glyphicon glyphicon-lock"></span>
+    </a>
+    {% endif %}
+    <h1><a href="{% url 'post_list' %}">Django's Blog </a></h1>
+    <!-- <p>{{request.method}}</p> request객체에 들어있는 메소드를 출력 !-->
+</div>
+<div class="content container">
+    <div class="row">
+        <div class="col-md-8">
+            {% block content %}
+            {% endblock %}
+        </div>
+    </div>
+</div>
+<!-- 클라이언트 측에서 보이는 주석 -->
+{% comment %}
+django 주석
+{% endcomment %}
+</body>
+</html>
